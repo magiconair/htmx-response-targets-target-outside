@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/debug.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/response-targets.js"></script>
+  </head>
+  <body>
+    <!-- repsonse-targets behaves correctly -->
+    <div hx-ext="response-targets">
+      <div id="response-div-1"></div>
+      <button
+        hx-get="/fail"
+        hx-target="#response-div-1"
+        hx-target-5*="#errors-1"
+      >
+        Response Targets with hx-target inside div (works)
+      </button>
+      <div id="errors-1">Replace me with "Internal Server Error"</div>
+    </div>
+
+    <!-- repsonse-targets fails-->
+    <div hx-ext="response-targets">
+      <button
+        hx-get="/fail"
+        hx-target="#response-div-2"
+        hx-target-5*="#errors-2"
+      >
+        Response Targets with hx-target outside div (fails)
+      </button>
+      <div id="errors-2">Replace me with "Internal Server Error"</div>
+    </div>
+    <div id="response-div-2"></div>
+
+    <!-- response-target behaves correctly in non-error case -->
+    <div hx-ext="response-targets">
+      <button hx-get="/ok" hx-target="#response-div-3">
+        Response Targets with hx-target but no hx-target-xxx and ouside div
+        (works)
+      </button>
+    </div>
+    <div id="errors-3"></div>
+  </body>
+  <div id="response-div-3">Replace me with "OK"</div>
+</html>
